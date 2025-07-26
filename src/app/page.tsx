@@ -1,34 +1,167 @@
-import { SimpleHeroSection } from '@/components/ui/SimpleHeroSection'
-import { SimpleFeaturedArticles } from '@/components/blog/SimpleFeaturedArticles'
-import { SimpleNewsletterSection } from '@/components/ui/SimpleNewsletterSection'
+import { Suspense } from "react";
+import {
+  getBlogPosts,
+  getCategories,
+  getTags,
+  getRecentBlogPosts,
+} from "@/lib/data";
+import { BlogList } from "@/components/blog";
+import { BlogCardSkeleton } from "@/components/ui";
+import PaginationClient from "@/components/ui/PaginationClient";
+import { Sidebar } from "@/components/layout";
 
-export default function Home() {
+interface HomePageProps {
+  searchParams: {
+    page?: string;
+    category?: string;
+    tag?: string;
+  };
+}
+
+async function BlogContent({ searchParams }: HomePageProps) {
+  const currentPage = parseInt(searchParams.page || "1", 10);
+  const { posts, pagination } = await getBlogPosts({
+    page: currentPage,
+    category: searchParams.category,
+    tag: searchParams.tag,
+  });
+
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <SimpleHeroSection />
-      
-      {/* Featured Articles */}
-      <section className="py-20 bg-white dark:bg-black">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <SimpleFeaturedArticles />
+    <>
+      <BlogList posts={posts} pagination={pagination} />
+      {pagination.totalPages > 1 && (
+        <div className="mt-12">
+          <PaginationClient
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            category={searchParams.category}
+            tag={searchParams.tag}
+          />
         </div>
-      </section>
-      
-      {/* Newsletter Section */}
-      <SimpleNewsletterSection />
-      
-      {/* Latest Articles */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl lg:text-4xl font-serif font-bold text-center mb-12 text-black dark:text-white">
-            最新記事
-          </h2>
-          <div className="text-center text-gray-600 dark:text-gray-400">
-            記事はまだありません。コンテンツを追加してください。
+      )}
+    </>
+  );
+}
+
+async function SidebarContent({ searchParams }: HomePageProps) {
+  const [categories, tags, recentPosts] = await Promise.all([
+    getCategories(),
+    getTags(),
+    getRecentBlogPosts(),
+  ]);
+
+  return (
+    <Sidebar
+      categories={categories}
+      tags={tags}
+      recentPosts={recentPosts}
+      selectedCategory={searchParams.category}
+      selectedTag={searchParams.tag}
+    />
+  );
+}
+
+export default function HomePage({ searchParams }: HomePageProps) {
+  const getPageTitle = () => {
+    if (searchParams.category) {
+      return `カテゴリ: ${searchParams.category}`;
+    }
+    if (searchParams.tag) {
+      return `タグ: ${searchParams.tag}`;
+    }
+    return "ブログ記事一覧";
+  };
+
+  const getFilterDescription = () => {
+    if (searchParams.category) {
+      return `「${searchParams.category}」カテゴリの記事`;
+    }
+    if (searchParams.tag) {
+      return `「${searchParams.tag}」タグの記事`;
+    }
+    return "最新のブログ記事をお届けします";
+  };
+
+  const isHomePage =
+    !searchParams.category && !searchParams.tag && !searchParams.page;
+
+  return (
+    <>
+      {isHomePage && (
+        <div className="bg-gradient-to-br from-primary-50 via-white to-accent-50">
+          <div className="container max-w-6xl py-20">
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="text-5xl md:text-6xl font-bold text-neutral-900 mb-6">
+                美しいデザインと
+                <span className="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
+                  質の高いコンテンツ
+                </span>
+              </h1>
+              <p className="text-xl text-neutral-600 mb-8 leading-relaxed">
+                技術記事から日常の洞察まで、読みやすさと美しさを追求したブログサイトです。
+                最新のWebテクノロジーと洗練されたデザインで、価値あるコンテンツをお届けします。
+              </p>
+            </div>
           </div>
         </div>
-      </section>
-    </div>
-  )
+      )}
+
+      <div className="container max-w-6xl py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="lg:col-span-3">
+            {!isHomePage && (
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-neutral-900 mb-2">
+                  {getPageTitle()}
+                </h1>
+                <p className="text-neutral-600">{getFilterDescription()}</p>
+              </div>
+            )}
+
+            {(searchParams.category || searchParams.tag) && (
+              <div className="mb-4">
+                <a
+                  href="/"
+                  className="inline-flex items-center text-sm text-primary-600 hover:text-primary-700 transition-colors"
+                >
+                  ← すべての記事を表示
+                </a>
+              </div>
+            )}
+
+            <Suspense
+              fallback={
+                <div className="space-y-6">
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <BlogCardSkeleton key={index} />
+                  ))}
+                </div>
+              }
+            >
+              <BlogContent searchParams={searchParams} />
+            </Suspense>
+          </div>
+
+          <div className="lg:col-span-1">
+            <Suspense
+              fallback={
+                <div className="space-y-6">
+                  <div className="bg-white rounded-lg shadow-sm border border-neutral-200 p-6">
+                    <div className="skeleton h-6 w-24 mb-4"></div>
+                    <div className="space-y-2">
+                      {Array.from({ length: 4 }).map((_, index) => (
+                        <div key={index} className="skeleton h-4 w-full"></div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              }
+            >
+              <SidebarContent searchParams={searchParams} />
+            </Suspense>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
