@@ -312,7 +312,7 @@ TypeScriptを活用することで、開発時のエラーを削減し、より�
     category: mockCategories[0],
     tags: [mockTags[4], mockTags[8], mockTags[9]],
     featuredImage:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=entropy&auto=format&q=80",
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=600&fit=crop&crop=entropy&auto=format&q=80",
     seo: {
       metaTitle: "モダンCSSでレスポンシブデザインを作る | ブログサイト",
       metaDescription:
@@ -412,7 +412,7 @@ CMD ["npm", "start"]
     category: mockCategories[2],
     tags: [mockTags[12], mockTags[13], mockTags[6]],
     featuredImage:
-      "https://images.unsplash.com/photo-1486312338219-ce68e2c6b64d?w=800&h=600&fit=crop&crop=entropy&auto=format&q=80",
+      "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop&crop=entropy&auto=format&q=80",
     seo: {
       metaTitle: "効率的なワークフローのための開発環境構築 | ブログサイト",
       metaDescription:
@@ -528,7 +528,7 @@ const handleKeyDown = (event: KeyboardEvent) => {
     category: mockCategories[0],
     tags: [mockTags[9], mockTags[5], mockTags[13]],
     featuredImage:
-      "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800&h=600&fit=crop&crop=entropy&auto=format&q=80",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=entropy&auto=format&q=80",
     seo: {
       metaTitle: "Webアクセシビリティの基本と実践 | ブログサイト",
       metaDescription:

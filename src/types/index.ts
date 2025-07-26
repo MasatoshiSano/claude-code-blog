@@ -1,9 +1,17 @@
+export interface SocialLink {
+  platform: string;
+  url: string;
+  icon?: string;
+}
+
 export interface Author {
   id: string;
   name: string;
   email: string;
   avatar?: string;
   bio?: string;
+  articlesCount?: number;
+  socialLinks?: SocialLink[];
 }
 
 export interface Category {
@@ -124,11 +132,11 @@ export interface CardProps {
   padding?: "sm" | "md" | "lg";
 }
 
-export interface InputProps {
+export interface CustomInputProps {
   label?: string;
   placeholder?: string;
   error?: string;
-  type?: "text" | "email" | "password" | "search";
+  inputType?: "text" | "email" | "password" | "search";
   required?: boolean;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

@@ -1,42 +1,59 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui";
+import { Button, Container } from "@/components/ui";
+import { Logo, Navigation } from "@/components/layout";
 import SearchClient from "@/components/ui/SearchClient";
+import { usePathname } from "next/navigation";
 
-const Header = () => {
+interface HeaderProps {
+  className?: string;
+  sticky?: boolean;
+  transparent?: boolean;
+  navigationItems?: Array<{
+    href: string;
+    label: string;
+    isActive?: boolean;
+  }>;
+}
+
+const Header = ({ 
+  className,
+  sticky = true,
+  transparent = true,
+  navigationItems,
+}: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const defaultNavigationItems = [
+    { href: "/", label: "ホーム", isActive: pathname === "/" },
+    { href: "/contact", label: "お問い合わせ", isActive: pathname === "/contact" },
+  ];
+
+  const items = navigationItems || defaultNavigationItems;
+
+  const headerClasses = [
+    "border-b border-neutral-200/50 z-50",
+    sticky && "sticky top-0",
+    transparent ? "bg-white/80 backdrop-blur-md" : "bg-white",
+    className,
+  ].filter(Boolean).join(" ");
 
   return (
-    <header className="bg-white/80 backdrop-blur-md border-b border-neutral-200/50 sticky top-0 z-50">
-      <div className="container max-w-6xl">
+    <header className={headerClasses}>
+      <Container center padding>
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center space-x-8">
-            <Link
-              href="/"
-              className="text-2xl font-bold text-neutral-900 hover:text-primary-600 transition-all duration-300"
-            >
-              <span className="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
-                Blog
-              </span>
-              <span className="text-neutral-800 ml-1">Site</span>
-            </Link>
+            <Logo size="md" />
 
-            <nav className="hidden md:flex items-center space-x-6">
-              <Link
-                href="/"
-                className="text-neutral-700 hover:text-primary-600 transition-colors"
-              >
-                ホーム
-              </Link>
-              <Link
-                href="/contact"
-                className="text-neutral-700 hover:text-primary-600 transition-colors"
-              >
-                お問い合わせ
-              </Link>
-            </nav>
+            <div className="hidden md:block">
+              <Navigation 
+                items={items}
+                variant="default"
+                size="md"
+              />
+            </div>
           </div>
 
           <div className="flex items-center space-x-4">
@@ -49,6 +66,7 @@ const Header = () => {
               size="sm"
               className="md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="メニューを開く"
             >
               <svg
                 className="w-6 h-6"
@@ -60,7 +78,7 @@ const Header = () => {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
+                  d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
                 />
               </svg>
             </Button>
@@ -69,30 +87,22 @@ const Header = () => {
 
         {isMenuOpen && (
           <div className="md:hidden border-t border-neutral-200 py-4">
-            <nav className="flex flex-col space-y-4">
-              <Link
-                href="/"
-                className="text-neutral-700 hover:text-primary-600 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                ホーム
-              </Link>
-              <Link
-                href="/contact"
-                className="text-neutral-700 hover:text-primary-600 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                お問い合わせ
-              </Link>
-              <div className="pt-4">
-                <SearchClient placeholder="記事を検索..." />
-              </div>
-            </nav>
+            <Navigation
+              items={items}
+              direction="vertical"
+              variant="default"
+              size="md"
+              onItemClick={() => setIsMenuOpen(false)}
+            />
+            <div className="pt-4">
+              <SearchClient placeholder="記事を検索..." />
+            </div>
           </div>
         )}
-      </div>
+      </Container>
     </header>
   );
 };
 
+export { Header, type HeaderProps };
 export default Header;
