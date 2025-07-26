@@ -28,6 +28,7 @@ const Header = ({
 
   const defaultNavigationItems = [
     { href: "/", label: "ホーム", isActive: pathname === "/" },
+    { href: "/admin/add-post", label: "記事追加", isActive: pathname === "/admin/add-post" },
     { href: "/contact", label: "お問い合わせ", isActive: pathname === "/contact" },
   ];
 

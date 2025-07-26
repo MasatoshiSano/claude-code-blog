@@ -1,0 +1,24 @@
+
+> claude-code-blog@0.1.0 dev
+> next dev -p 3003
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3003
+
+ ✓ Starting...
+ ✓ Ready in 2.4s
+ ○ Compiling / ...
+ ✓ Compiled / in 7.5s (664 modules)
+ GET / 200 in 8433ms
+ ✓ Compiled in 1015ms (317 modules)
+ ✓ Compiled in 137ms (303 modules)
+ GET / 200 in 252ms
+ ○ Compiling /admin/add-post ...
+ ✓ Compiled /admin/add-post in 3.7s (1277 modules)
+ ○ Compiling /api/posts ...
+ ✓ Compiled /api/posts in 549ms (697 modules)
+ POST /api/posts 201 in 710ms
+ ○ Compiling /blog/[slug] ...
+ ✓ Compiled /blog/[slug] in 2.8s (1817 modules)
+ ○ Compiling /contact ...
+ ✓ Compiled /contact in 5.2s (1779 modules)
