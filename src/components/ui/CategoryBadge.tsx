@@ -34,8 +34,7 @@ export function CategoryBadge({
       case "pill":
         return (
           <span
-            className={`${baseClasses} ${sizeClasses[size]} rounded-full text-white shadow-sm hover:shadow-md ${className}`}
-            style={{ backgroundColor: category.color || '#6b7280' }}
+            className={`${baseClasses} ${sizeClasses[size]} rounded-full bg-primary-600 text-white shadow-sm hover:shadow-md hover:bg-primary-700 transition-colors ${className}`}
           >
             {category.name}
           </span>

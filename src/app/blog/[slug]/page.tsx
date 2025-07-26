@@ -97,8 +97,8 @@ async function RelatedPostsContent({
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-8 md:p-12 mb-8">
       <div className="flex items-center space-x-3 mb-8">
-        <div className="w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-lg flex items-center justify-center">
-          <span className="text-white text-sm font-bold">📚</span>
+        <div className="w-8 h-8 bg-neutral-100 rounded-lg flex items-center justify-center">
+          <span className="text-neutral-600 text-sm font-bold">📚</span>
         </div>
         <h3 className="text-2xl font-bold text-neutral-900">関連記事</h3>
       </div>
@@ -204,7 +204,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
             {/* ヘッダー */}
             <header className="mb-12">
-              <div className="bg-gradient-to-br from-primary-50 via-white to-accent-50 border border-primary-100 rounded-2xl p-8 md:p-10 shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="bg-white border border-neutral-200 rounded-lg p-8 md:p-10 shadow-sm hover:shadow-lg transition-all duration-300">
                 {/* メタ情報 */}
                 <div className="flex items-center space-x-4 text-sm text-neutral-600 mb-6">
                   <time 
@@ -230,9 +230,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                 {/* タイトル */}
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 leading-tight mb-6 tracking-tight">
-                  <span className="bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-700 bg-clip-text text-transparent">
-                    {post.title}
-                  </span>
+                  {post.title}
                 </h1>
 
                 {/* 抜粋 */}
@@ -241,10 +239,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </p>
 
                 {/* 著者情報とタグ */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between border-t border-primary-200 pt-6 space-y-4 md:space-y-0">
+                <div className="flex flex-col md:flex-row md:items-center justify-between border-t border-neutral-200 pt-6 space-y-4 md:space-y-0">
                   {/* 著者情報 */}
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
+                    <div className="w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center text-neutral-600 font-semibold text-lg">
                       {post.author.name.charAt(0)}
                     </div>
                     <div>
@@ -274,7 +272,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {/* 記事本文 */}
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 overflow-hidden mb-12">
               <div className="p-8 md:p-12">
-                <div className="prose prose-lg max-w-none prose-neutral prose-headings:text-neutral-900 prose-p:text-neutral-700 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline prose-code:text-primary-800 prose-code:bg-primary-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-neutral-900 prose-pre:text-neutral-100 prose-p:leading-relaxed prose-p:mb-6">
+                <div className="prose prose-lg max-w-none prose-neutral prose-headings:text-neutral-900 prose-p:text-neutral-700 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline prose-code:text-neutral-800 prose-code:bg-neutral-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-neutral-900 prose-pre:text-neutral-100 prose-p:leading-relaxed prose-p:mb-6">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight]}
@@ -286,29 +284,25 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 }
                 return (
                   <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 mt-12 mb-6 first:mt-0 relative">
-                    <span className="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
-                      {children}
-                    </span>
-                    <div className="absolute -bottom-2 left-0 w-16 h-1 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full"></div>
+                    {children}
+                    <div className="absolute -bottom-2 left-0 w-16 h-1 bg-neutral-200 rounded-full"></div>
                   </h1>
                 );
               },
               h2: ({ children }) => (
-                <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mt-10 mb-6 relative group">
-                  <div className="relative bg-gradient-to-r from-primary-50 to-primary-100 border border-primary-200 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-md transition-all duration-300 group-hover:border-primary-300 group-hover:from-primary-100 group-hover:to-primary-150">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-400 to-primary-600 rounded-t-lg"></div>
+                <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mt-10 mb-6 relative">
+                  <div className="relative bg-neutral-50 border border-neutral-200 rounded-lg p-4 md:p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:border-neutral-300">
                     <div className="flex items-center space-x-3">
-                      <div className="w-2 h-8 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full opacity-80 group-hover:opacity-100 transition-opacity duration-200"></div>
-                      <span className="text-neutral-800 group-hover:text-neutral-900 transition-colors duration-200">
+                      <div className="w-2 h-8 bg-neutral-300 rounded-full"></div>
+                      <span className="text-neutral-900">
                         {children}
                       </span>
                     </div>
-                    <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary-300 to-transparent"></div>
                   </div>
                 </h2>
               ),
               h3: ({ children }) => (
-                <h3 className="text-xl md:text-2xl font-semibold text-neutral-900 mt-8 mb-3 relative pl-4 border-l-4 border-primary-200 hover:border-primary-300 transition-colors duration-200">
+                <h3 className="text-xl md:text-2xl font-semibold text-neutral-900 mt-8 mb-3 relative pl-4 border-l-4 border-neutral-200 hover:border-neutral-300 transition-colors duration-200">
                   {children}
                 </h3>
               ),
@@ -322,7 +316,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 if (isInline) {
                   return (
                     <code
-                      className="text-primary-800 bg-primary-50 px-1 py-0.5 rounded text-sm"
+                      className="text-neutral-800 bg-neutral-100 px-1 py-0.5 rounded text-sm"
                       {...props}
                     >
                       {children}
@@ -349,7 +343,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 );
               },
               blockquote: ({ children }) => (
-                <blockquote className="border-l-4 border-primary-200 pl-4 my-4 italic text-neutral-600">
+                <blockquote className="border-l-4 border-neutral-200 pl-4 my-4 italic text-neutral-600">
                   {children}
                 </blockquote>
               ),
