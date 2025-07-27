@@ -49,6 +49,7 @@ export interface BlogPost {
   featuredImage?: string;
   seo: SEOData;
   status: "draft" | "published";
+  viewCount?: number;
 }
 
 export interface Comment {

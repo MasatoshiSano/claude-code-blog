@@ -1,0 +1,58 @@
+INFO 2025-07-27 01:01:23,223 autoreload 9 135495451192192 Watching for file changes with StatReloader
+INFO 2025-07-27 08:57:09,060 autoreload 9 135495451192192 /app/blog/models.py changed, reloading.
+INFO 2025-07-27 08:57:11,682 autoreload 11 128682966698880 Watching for file changes with StatReloader
+INFO 2025-07-27 08:57:18,792 autoreload 11 128682966698880 /app/blog/admin.py changed, reloading.
+INFO 2025-07-27 08:57:20,480 autoreload 13 139125154302848 Watching for file changes with StatReloader
+INFO 2025-07-27 08:57:49,564 autoreload 13 139125154302848 /app/blog/models.py changed, reloading.
+INFO 2025-07-27 08:57:50,881 autoreload 15 136697429625728 Watching for file changes with StatReloader
+INFO 2025-07-27 08:58:00,763 autoreload 15 136697429625728 /app/blog/admin.py changed, reloading.
+INFO 2025-07-27 08:58:02,248 autoreload 17 129353538194304 Watching for file changes with StatReloader
+INFO 2025-07-27 08:59:02,792 autoreload 17 129353538194304 /app/blog/models.py changed, reloading.
+INFO 2025-07-27 08:59:05,333 autoreload 19 129953536940928 Watching for file changes with StatReloader
+INFO 2025-07-27 08:59:16,828 autoreload 19 129953536940928 /app/blog/admin.py changed, reloading.
+INFO 2025-07-27 08:59:18,684 autoreload 21 140580118940544 Watching for file changes with StatReloader
+INFO 2025-07-27 09:00:38,378 autoreload 21 140580118940544 /app/blog/models.py changed, reloading.
+INFO 2025-07-27 09:00:41,156 autoreload 23 136600962923392 Watching for file changes with StatReloader
+INFO 2025-07-27 09:00:43,343 autoreload 23 136600962923392 /app/blog/admin.py changed, reloading.
+INFO 2025-07-27 09:00:44,834 autoreload 25 135201145883520 Watching for file changes with StatReloader
+INFO 2025-07-27 09:00:55,910 autoreload 25 135201145883520 /app/blog/admin.py changed, reloading.
+INFO 2025-07-27 09:00:57,940 autoreload 27 140039442586496 Watching for file changes with StatReloader
+INFO 2025-07-27 09:06:29,902 autoreload 9 137436625226624 Watching for file changes with StatReloader
+INFO 2025-07-27 09:14:27,580 autoreload 9 137436625226624 /app/blog_project/urls.py changed, reloading.
+INFO 2025-07-27 09:14:30,146 autoreload 11 134231748434816 Watching for file changes with StatReloader
+INFO 2025-07-27 09:14:36,032 autoreload 11 134231748434816 /app/blog_project/settings/base.py changed, reloading.
+INFO 2025-07-27 09:14:38,478 autoreload 13 127384926677888 Watching for file changes with StatReloader
+INFO 2025-07-27 09:14:42,339 autoreload 13 127384926677888 /app/blog_project/settings/base.py changed, reloading.
+INFO 2025-07-27 09:14:45,382 autoreload 15 132974439127936 Watching for file changes with StatReloader
+INFO 2025-07-27 09:15:21,887 autoreload 15 132974439127936 /app/authentication/serializers.py changed, reloading.
+INFO 2025-07-27 09:15:24,485 autoreload 23 136427366779776 Watching for file changes with StatReloader
+INFO 2025-07-27 09:29:30,335 autoreload 23 136427366779776 /app/blog/views.py changed, reloading.
+INFO 2025-07-27 09:29:35,204 autoreload 37 125985573329792 Watching for file changes with StatReloader
+INFO 2025-07-27 09:29:37,714 autoreload 37 125985573329792 /app/blog/views.py changed, reloading.
+INFO 2025-07-27 09:29:39,113 autoreload 39 125514340535168 Watching for file changes with StatReloader
+INFO 2025-07-27 09:30:59,634 autoreload 39 125514340535168 /app/blog_project/settings/base.py changed, reloading.
+INFO 2025-07-27 09:31:01,533 autoreload 41 139222151146368 Watching for file changes with StatReloader
+INFO 2025-07-27 09:31:25,518 autoreload 9 129159921306496 Watching for file changes with StatReloader
+INFO 2025-07-27 09:33:07,120 autoreload 9 129159921306496 /app/blog_project/settings/base.py changed, reloading.
+INFO 2025-07-27 09:33:10,910 autoreload 17 126263568391040 Watching for file changes with StatReloader
+INFO 2025-07-27 09:33:15,668 autoreload 17 126263568391040 /app/blog_project/settings/base.py changed, reloading.
+INFO 2025-07-27 09:33:18,449 autoreload 19 134252161497984 Watching for file changes with StatReloader
+INFO 2025-07-27 09:33:45,243 autoreload 19 134252161497984 /app/blog_project/settings/base.py changed, reloading.
+INFO 2025-07-27 09:33:47,421 autoreload 21 138974683872128 Watching for file changes with StatReloader
+INFO 2025-07-27 09:34:16,568 autoreload 21 138974683872128 /app/blog_project/settings/base.py changed, reloading.
+INFO 2025-07-27 09:34:19,003 autoreload 23 136347165870976 Watching for file changes with StatReloader
+INFO 2025-07-27 09:34:28,407 autoreload 23 136347165870976 /app/blog_project/settings/base.py changed, reloading.
+INFO 2025-07-27 09:34:31,609 autoreload 25 123760158722944 Watching for file changes with StatReloader
+INFO 2025-07-27 09:35:00,655 autoreload 25 123760158722944 /app/authentication/views.py changed, reloading.
+INFO 2025-07-27 09:35:03,750 autoreload 27 134225562045312 Watching for file changes with StatReloader
+INFO 2025-07-27 09:35:11,448 autoreload 27 134225562045312 /app/blog/views.py changed, reloading.
+INFO 2025-07-27 09:35:15,170 autoreload 29 124769298877312 Watching for file changes with StatReloader
+INFO 2025-07-27 09:35:19,723 autoreload 29 124769298877312 /app/blog/views.py changed, reloading.
+INFO 2025-07-27 09:35:21,779 autoreload 31 129716146609024 Watching for file changes with StatReloader
+INFO 2025-07-27 09:35:25,808 autoreload 31 129716146609024 /app/blog/views.py changed, reloading.
+INFO 2025-07-27 09:35:30,993 autoreload 33 135869300038528 Watching for file changes with StatReloader
+INFO 2025-07-27 09:35:35,793 autoreload 33 135869300038528 /app/blog_project/settings/base.py changed, reloading.
+INFO 2025-07-27 09:35:44,267 autoreload 35 125353012206464 Watching for file changes with StatReloader
+INFO 2025-07-27 09:39:56,060 autoreload 10 123348391390080 Watching for file changes with StatReloader
+INFO 2025-07-27 15:48:35,704 autoreload 9 126122653223808 Watching for file changes with StatReloader
+INFO 2025-07-27 18:38:37,087 autoreload 9 139082661399424 Watching for file changes with StatReloader
