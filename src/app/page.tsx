@@ -1,10 +1,5 @@
 import { Suspense } from "react";
-import {
-  getBlogPosts,
-  getCategories,
-  getTags,
-  getRecentBlogPosts,
-} from "@/lib/data";
+import { getBlogPageData } from "@/lib/cache";
 import { BlogList } from "@/components/blog";
 import { BlogCardSkeleton } from "@/components/ui";
 import PaginationClient from "@/components/ui/PaginationClient";
@@ -18,46 +13,41 @@ interface HomePageProps {
   };
 }
 
-async function BlogContent({ searchParams }: HomePageProps) {
+async function BlogPageContent({ searchParams }: HomePageProps) {
   const currentPage = parseInt(searchParams.page || "1", 10);
-  const { posts, pagination } = await getBlogPosts({
+  const data = await getBlogPageData({
     page: currentPage,
     category: searchParams.category,
     tag: searchParams.tag,
   });
 
+  const { posts, pagination, categories, tags, recentPosts } = data;
+
   return (
     <>
-      <BlogList posts={posts} pagination={pagination} />
-      {pagination.totalPages > 1 && (
-        <div className="mt-12">
-          <PaginationClient
-            currentPage={pagination.currentPage}
-            totalPages={pagination.totalPages}
-            category={searchParams.category}
-            tag={searchParams.tag}
-          />
-        </div>
-      )}
+      <div className="lg:col-span-3">
+        <BlogList posts={posts} pagination={pagination} />
+        {pagination.totalPages > 1 && (
+          <div className="mt-12">
+            <PaginationClient
+              currentPage={pagination.currentPage}
+              totalPages={pagination.totalPages}
+              category={searchParams.category}
+              tag={searchParams.tag}
+            />
+          </div>
+        )}
+      </div>
+      <div className="lg:col-span-1">
+        <Sidebar
+          categories={categories}
+          tags={tags}
+          recentPosts={recentPosts}
+          selectedCategory={searchParams.category}
+          selectedTag={searchParams.tag}
+        />
+      </div>
     </>
-  );
-}
-
-async function SidebarContent({ searchParams }: HomePageProps) {
-  const [categories, tags, recentPosts] = await Promise.all([
-    getCategories(),
-    getTags(),
-    getRecentBlogPosts(),
-  ]);
-
-  return (
-    <Sidebar
-      categories={categories}
-      tags={tags}
-      recentPosts={recentPosts}
-      selectedCategory={searchParams.category}
-      selectedTag={searchParams.tag}
-    />
   );
 }
 
@@ -108,44 +98,35 @@ export default function HomePage({ searchParams }: HomePageProps) {
 
       <div className="container max-w-6xl py-12">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-3">
-            {!isHomePage && (
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-neutral-900 mb-2">
-                  {getPageTitle()}
-                </h1>
-                <p className="text-neutral-600">{getFilterDescription()}</p>
-              </div>
-            )}
+          {!isHomePage && (
+            <div className="lg:col-span-3 mb-8">
+              <h1 className="text-3xl font-bold text-neutral-900 mb-2">
+                {getPageTitle()}
+              </h1>
+              <p className="text-neutral-600">{getFilterDescription()}</p>
+            </div>
+          )}
 
-            {(searchParams.category || searchParams.tag) && (
-              <div className="mb-4">
-                <a
-                  href="/"
-                  className="inline-flex items-center text-sm text-primary-600 hover:text-primary-700 transition-colors"
-                >
-                  ← すべての記事を表示
-                </a>
-              </div>
-            )}
+          {(searchParams.category || searchParams.tag) && (
+            <div className="lg:col-span-3 mb-4">
+              <a
+                href="/"
+                className="inline-flex items-center text-sm text-primary-600 hover:text-primary-700 transition-colors"
+              >
+                ← すべての記事を表示
+              </a>
+            </div>
+          )}
 
-            <Suspense
-              fallback={
-                <div className="space-y-6">
+          <Suspense
+            fallback={
+              <div className="lg:col-span-4 grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <div className="lg:col-span-3 space-y-6">
                   {Array.from({ length: 6 }).map((_, index) => (
                     <BlogCardSkeleton key={index} />
                   ))}
                 </div>
-              }
-            >
-              <BlogContent searchParams={searchParams} />
-            </Suspense>
-          </div>
-
-          <div className="lg:col-span-1">
-            <Suspense
-              fallback={
-                <div className="space-y-6">
+                <div className="lg:col-span-1 space-y-6">
                   <div className="bg-white rounded-lg shadow-sm border border-neutral-200 p-6">
                     <div className="skeleton h-6 w-24 mb-4"></div>
                     <div className="space-y-2">
@@ -155,11 +136,11 @@ export default function HomePage({ searchParams }: HomePageProps) {
                     </div>
                   </div>
                 </div>
-              }
-            >
-              <SidebarContent searchParams={searchParams} />
-            </Suspense>
-          </div>
+              </div>
+            }
+          >
+            <BlogPageContent searchParams={searchParams} />
+          </Suspense>
         </div>
       </div>
     </>

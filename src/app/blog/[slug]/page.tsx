@@ -2,23 +2,15 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
 import {
-  getBlogPostBySlug,
-  getCommentsByPostId,
   addComment,
-  getRelatedBlogPosts,
   getAllPostSlugs,
-  getCategories,
-  getTags,
-  getRecentBlogPosts,
 } from "@/lib/data";
-import { CommentSection, RecentPosts } from "@/components/blog";
+import { getBlogPostPageData } from "@/lib/cache";
+import { RecentPosts } from "@/components/blog";
 import { Sidebar } from "@/components/layout";
 import { Card, LoadingSpinner, CategoryBadge, TagList } from "@/components/ui";
-import CodeBlock from "@/components/ui/CodeBlock";
+import { ReactMarkdownDynamic, CommentSectionDynamic, CodeBlockDynamic } from "@/components/dynamic/index";
 import { formatDate, calculateReadingTime } from "@/lib/utils";
 import { NewComment } from "@/types";
 import "highlight.js/styles/github.css";
@@ -39,13 +31,15 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
-  const post = await getBlogPostBySlug(params.slug);
+  const data = await getBlogPostPageData(params.slug);
 
-  if (!post) {
+  if (!data?.post) {
     return {
       title: "ページが見つかりません",
     };
   }
+
+  const { post } = data;
 
   return {
     title: post.seo.metaTitle,
@@ -70,11 +64,9 @@ export async function generateMetadata({
   };
 }
 
-async function CommentsContent({ postId }: { postId: string }) {
-  const comments = await getCommentsByPostId(postId);
-
+async function CommentsContent({ postId, comments }: { postId: string; comments: any[] }) {
   return (
-    <CommentSection
+    <CommentSectionDynamic
       postId={postId}
       comments={comments}
       onAddComment={async (commentData: NewComment) => {
@@ -85,13 +77,7 @@ async function CommentsContent({ postId }: { postId: string }) {
   );
 }
 
-async function RelatedPostsContent({
-  currentPostId,
-}: {
-  currentPostId: string;
-}) {
-  const relatedPosts = await getRelatedBlogPosts(currentPostId);
-
+function RelatedPostsContent({ relatedPosts }: { relatedPosts: any[] }) {
   if (relatedPosts.length === 0) return null;
 
   return (
@@ -143,12 +129,13 @@ async function RelatedPostsContent({
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getBlogPostBySlug(params.slug);
+  const data = await getBlogPostPageData(params.slug);
 
-  if (!post) {
+  if (!data) {
     notFound();
   }
 
+  const { post, relatedPosts, comments, categories, tags, recentPosts } = data;
   const readingTime = calculateReadingTime(post.content);
 
   const structuredData = {
@@ -172,13 +159,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       "@id": `/blog/${post.slug}`,
     },
   };
-
-  // サイドバー用データの取得
-  const [categories, tags, recentPosts] = await Promise.all([
-    getCategories(),
-    getTags(),
-    getRecentBlogPosts(),
-  ]);
 
   return (
     <>
@@ -273,9 +253,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 overflow-hidden mb-12">
               <div className="p-8 md:p-12">
                 <div className="prose prose-lg max-w-none prose-neutral prose-headings:text-neutral-900 prose-p:text-neutral-700 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline prose-code:text-neutral-800 prose-code:bg-neutral-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-neutral-900 prose-pre:text-neutral-100 prose-p:leading-relaxed prose-p:mb-6">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeHighlight]}
+          <ReactMarkdownDynamic
+            remarkPlugins={[require('remark-gfm')]}
+            rehypePlugins={[require('rehype-highlight')]}
             components={{
               h1: ({ children }) => {
                 // 記事のタイトルと同じ場合は表示しない（ヘッダーで既に表示済み）
@@ -337,9 +317,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 }
                 
                 return (
-                  <CodeBlock {...props}>
+                  <CodeBlockDynamic {...props}>
                     {codeContent}
-                  </CodeBlock>
+                  </CodeBlockDynamic>
                 );
               },
               blockquote: ({ children }) => (
@@ -371,37 +351,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             }}
                   >
                     {post.content}
-                  </ReactMarkdown>
+                  </ReactMarkdownDynamic>
                 </div>
               </div>
             </div>
 
             {/* 関連記事 */}
-            <Suspense
-              fallback={
-                <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-12">
-                  <div className="text-center py-8">
-                    <LoadingSpinner size="lg" />
-                    <p className="mt-4 text-neutral-600">関連記事を読み込み中...</p>
-                  </div>
-                </div>
-              }
-            >
-              <RelatedPostsContent currentPostId={post.id} />
-            </Suspense>
+            <RelatedPostsContent relatedPosts={relatedPosts} />
 
             {/* コメントセクション */}
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-8 md:p-12">
-              <Suspense
-                fallback={
-                  <div className="text-center py-8">
-                    <LoadingSpinner size="lg" />
-                    <p className="mt-4 text-neutral-600">コメントを読み込み中...</p>
-                  </div>
-                }
-              >
-                <CommentsContent postId={post.id} />
-              </Suspense>
+              <CommentsContent postId={post.id} comments={comments} />
             </div>
           </article>
 

@@ -31,7 +31,6 @@ export const getAuthors = async (): Promise<Author[]> => {
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     return mockData.mockAuthors;
   }
   
@@ -44,7 +43,6 @@ export const getAuthorById = async (id: string): Promise<Author | null> => {
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 50));
     return mockData.mockAuthors.find((author: Author) => author.id === id) || null;
   }
   
@@ -58,7 +56,6 @@ export const getCategories = async (): Promise<Category[]> => {
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     return mockData.mockCategories;
   }
   
@@ -71,7 +68,6 @@ export const getCategoryBySlug = async (slug: string): Promise<Category | null> 
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 50));
     return mockData.mockCategories.find((category: Category) => category.slug === slug) || null;
   }
   
@@ -85,7 +81,6 @@ export const getTags = async (): Promise<Tag[]> => {
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     return mockData.mockTags;
   }
   
@@ -98,7 +93,6 @@ export const getTagBySlug = async (slug: string): Promise<Tag | null> => {
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 50));
     return mockData.mockTags.find((tag: Tag) => tag.slug === slug) || null;
   }
   
@@ -117,8 +111,6 @@ export const getBlogPosts = async (
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-
     let filteredPosts = [...mockData.mockBlogPosts];
 
     if (params.category) {
@@ -179,7 +171,6 @@ export const getBlogPostBySlug = async (slug: string): Promise<BlogPost | null> 
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     return mockData.mockBlogPosts.find((post: BlogPost) => post.slug === slug) || null;
   }
   
@@ -192,7 +183,6 @@ export const getBlogPostById = async (id: string): Promise<BlogPost | null> => {
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     return mockData.mockBlogPosts.find((post: BlogPost) => post.id === id) || null;
   }
   
@@ -205,7 +195,6 @@ export const getRecentBlogPosts = async (limit: number = 5): Promise<BlogPost[]>
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     return mockData.mockBlogPosts
       .sort(
         (a: BlogPost, b: BlogPost) =>
@@ -226,8 +215,6 @@ export const getRelatedBlogPosts = async (
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 150));
-
     const currentPost = mockData.mockBlogPosts.find((post: BlogPost) => post.id === currentPostId);
     if (!currentPost) return [];
 
@@ -247,10 +234,10 @@ export const getRelatedBlogPosts = async (
 
         return { post, score };
       })
-      .filter((item) => item.score > 0)
-      .sort((a, b) => b.score - a.score)
+      .filter((item: { post: BlogPost; score: number }) => item.score > 0)
+      .sort((a: { score: number }, b: { score: number }) => b.score - a.score)
       .slice(0, limit)
-      .map((item) => item.post);
+      .map((item: { post: BlogPost; score: number }) => item.post);
 
     return relatedPosts;
   }
@@ -265,7 +252,6 @@ export const getCommentsByPostId = async (postId: string): Promise<Comment[]> =>
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     return mockData.mockComments
       .filter(
         (comment: Comment) => comment.postId === postId && comment.status === "approved",
@@ -287,8 +273,6 @@ export const addComment = async (
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-
     const newComment: Comment = {
       ...comment,
       id: Math.random().toString(36).substring(2) + Date.now().toString(36),
@@ -313,8 +297,6 @@ export const searchBlogPosts = async (
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 150));
-
     if (!query.trim()) return [];
 
     const searchTerm = query.toLowerCase();
@@ -363,7 +345,6 @@ export const getPostsByCategorySlug = async (categorySlug: string): Promise<Blog
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     return mockData.mockBlogPosts.filter((post: BlogPost) => post.category.slug === categorySlug);
   }
   
@@ -376,7 +357,6 @@ export const getPostsByTagSlug = async (tagSlug: string): Promise<BlogPost[]> =>
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     return mockData.mockBlogPosts.filter((post: BlogPost) =>
       post.tags.some((tag) => tag.slug === tagSlug),
     );
@@ -392,7 +372,6 @@ export const getAllPostSlugs = async (): Promise<string[]> => {
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 50));
     return mockData.mockBlogPosts.map((post: BlogPost) => post.slug);
   }
   
@@ -405,7 +384,6 @@ export const getAllCategorySlugs = async (): Promise<string[]> => {
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 50));
     return mockData.mockCategories.map((category: Category) => category.slug);
   }
   
@@ -418,7 +396,6 @@ export const getAllTagSlugs = async (): Promise<string[]> => {
   }
   
   if (mockData) {
-    await new Promise((resolve) => setTimeout(resolve, 50));
     return mockData.mockTags.map((tag: Tag) => tag.slug);
   }
   

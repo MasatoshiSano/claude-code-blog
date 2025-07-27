@@ -56,3 +56,21 @@ INFO 2025-07-27 09:35:44,267 autoreload 35 125353012206464 Watching for file cha
 INFO 2025-07-27 09:39:56,060 autoreload 10 123348391390080 Watching for file changes with StatReloader
 INFO 2025-07-27 15:48:35,704 autoreload 9 126122653223808 Watching for file changes with StatReloader
 INFO 2025-07-27 18:38:37,087 autoreload 9 139082661399424 Watching for file changes with StatReloader
+WARNING 2025-07-27 18:56:08,704 log 9 139082560698048 Not Found: /api
+WARNING 2025-07-27 18:56:08,717 basehttp 9 139082560698048 "GET /api HTTP/1.1" 404 2563
+WARNING 2025-07-27 18:56:08,979 log 9 139082560698048 Not Found: /favicon.ico
+WARNING 2025-07-27 18:56:08,981 basehttp 9 139082560698048 "GET /favicon.ico HTTP/1.1" 404 2587
+INFO 2025-07-27 18:56:17,419 basehttp 9 139082560698048 "GET /api/blog HTTP/1.1" 301 0
+INFO 2025-07-27 18:56:17,490 basehttp 9 139082552305344 "GET /api/blog/ HTTP/1.1" 200 5922
+INFO 2025-07-27 18:56:17,577 basehttp 9 139082560698048 "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3385
+INFO 2025-07-27 18:56:17,580 basehttp 9 139082542864064 "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+INFO 2025-07-27 18:56:17,580 basehttp 9 139082181113536 "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3597
+INFO 2025-07-27 18:56:17,583 basehttp 9 139082534471360 "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+INFO 2025-07-27 18:56:17,590 basehttp 9 139082560698048 "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1719
+INFO 2025-07-27 18:56:17,591 basehttp 9 139082534471360 "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+INFO 2025-07-27 18:56:17,594 basehttp 9 139082181113536 "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+INFO 2025-07-27 18:56:17,596 basehttp 9 139082526078656 "GET /static/rest_framework/js/jquery-3.5.1.min.js HTTP/1.1" 200 89476
+INFO 2025-07-27 18:56:17,597 basehttp 9 139082542864064 "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+INFO 2025-07-27 18:56:17,597 basehttp 9 139082552305344 "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+INFO 2025-07-27 18:56:17,610 basehttp 9 139082552305344 "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+INFO 2025-07-27 19:42:42,562 autoreload 9 130710974372736 Watching for file changes with StatReloader

@@ -13,3 +13,4 @@ export { default as PaginationClient } from "./PaginationClient";
 export { default as SearchClient } from "./SearchClient";
 export { CategoryBadge } from "./CategoryBadge";
 export { TagList } from "./TagList";
+export { OptimizedImage } from "./OptimizedImage";

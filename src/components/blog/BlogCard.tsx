@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, memo, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, Badge, CategoryBadge, TagList } from "@/components/ui";
@@ -30,7 +30,7 @@ interface BlogCardProps {
   actions?: ReactNode;
 }
 
-const BlogCard = ({ 
+const BlogCard = memo(({ 
   post,
   variant = "default",
   size = "md",
@@ -47,21 +47,21 @@ const BlogCard = ({
   className = "",
   actions,
 }: BlogCardProps) => {
-  const href = linkProps?.href || `/blog/${post.slug}`;
+  const href = useMemo(() => linkProps?.href || `/blog/${post.slug}`, [linkProps?.href, post.slug]);
   
-  const sizeClasses = {
+  const sizeClasses = useMemo(() => ({
     sm: "p-3",
     md: "p-4",
     lg: "p-6",
-  };
+  }), []);
 
-  const titleSizes = {
+  const titleSizes = useMemo(() => ({
     sm: "text-base",
     md: "text-lg",
     lg: "text-xl",
-  };
+  }), []);
 
-  const getCardClasses = () => {
+  const cardClasses = useMemo(() => {
     const baseClasses = "overflow-hidden group transition-all duration-300";
     
     const variantClasses = {
@@ -72,7 +72,7 @@ const BlogCard = ({
     };
 
     return `${baseClasses} ${variantClasses[variant]} ${className}`;
-  };
+  }, [variant, className]);
 
   const renderImage = () => {
     if (!showImage || !post.featuredImage) return null;
@@ -154,7 +154,7 @@ const BlogCard = ({
   if (linkProps?.onClick || !href) {
     return (
       <Card 
-        className={getCardClasses()}
+        className={cardClasses}
         hover={variant !== "minimal"}
         onClick={linkProps?.onClick}
       >
@@ -164,13 +164,15 @@ const BlogCard = ({
   }
 
   return (
-    <Card className={getCardClasses()} hover={variant !== "minimal"}>
+    <Card className={cardClasses} hover={variant !== "minimal"}>
       <Link href={href} className="block">
         {content}
       </Link>
     </Card>
   );
-};
+});
+
+BlogCard.displayName = 'BlogCard';
 
 export { BlogCard, type BlogCardProps };
 export default BlogCard;

@@ -1,3 +1,4 @@
+import { memo, useMemo } from "react";
 import Link from "next/link";
 import { Card } from "@/components/ui";
 import { Category, Tag, BlogPost } from "@/types";
@@ -10,13 +11,18 @@ interface SidebarProps {
   selectedTag?: string;
 }
 
-const Sidebar = ({
+const Sidebar = memo(({
   categories,
   tags,
   recentPosts,
   selectedCategory,
   selectedTag,
 }: SidebarProps) => {
+  const displayedRecentPosts = useMemo(() => 
+    recentPosts.slice(0, 5), 
+    [recentPosts]
+  );
+
   return (
     <aside className="space-y-6">
       <Card>
@@ -77,7 +83,7 @@ const Sidebar = ({
           最新記事
         </h3>
         <ul className="space-y-4">
-          {recentPosts.slice(0, 5).map((post) => (
+          {displayedRecentPosts.map((post) => (
             <li key={post.id}>
               <Link href={`/blog/${post.slug}`} className="block group">
                 <h4 className="text-sm font-medium text-neutral-900 group-hover:text-primary-600 transition-colors line-clamp-2">
@@ -93,6 +99,8 @@ const Sidebar = ({
       </Card>
     </aside>
   );
-};
+});
+
+Sidebar.displayName = 'Sidebar';
 
 export default Sidebar;
